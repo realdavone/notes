@@ -13,7 +13,7 @@ export const RegisterForm = ({ callback }: { callback: () => void } ) => {
     setLoading(true)
     setError(null)
 
-    fetch('http://localhost:8000/auth/register', {
+    fetch(`${import.meta.env['VITE_API_BASE_URL']}auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -21,7 +21,7 @@ export const RegisterForm = ({ callback }: { callback: () => void } ) => {
     .then(res => res.json())
     .then(data => {
       if(!data.success) throw(data.message)
-      //callback()
+      callback()
     })
     .catch(error => setError(error))
     .finally(() => setLoading(false))
