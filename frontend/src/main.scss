@@ -15,6 +15,8 @@
   --text-color-light:#262628;
   --input-background-dark:#343434;
   --input-background-light:#ebebeb;
+  --nav-background-dark:#18181a;
+  --nav-background-light:#f1eded;
 
   --container-padding:2rem;
 }
@@ -30,11 +32,13 @@ body{
     --text-color:var(--text-color-dark);
     --background:var(--background-dark);
     --input-background:var(--input-background-dark);
+    --nav-background:var(--nav-background-dark);
   }
   &[data-dark-theme=false]{
     --text-color:var(--text-color-light);
     --background:var(--background-light);
     --input-background:var(--input-background-light);
+    --nav-background:var(--nav-background-light);
   }
 
   &::-webkit-scrollbar{width:15px;height:15px;}
@@ -70,11 +74,12 @@ nav{
   height:3rem;
   display:flex;
   align-items:center;
-  border-bottom:2px solid darkslategray;
   padding-top:2rem;
   padding-bottom:2rem;
   position:sticky;
   top:0;
+  background-color:var(--nav-background);
+  transition:0.2s ease all;
 
   .left{
     margin-right:auto;
@@ -215,6 +220,9 @@ section.auth{
       border-radius:0.5rem;
       font-size:0.75rem;
       font-weight:700;
+      display:flex;
+      justify-content:center;
+      gap:0.5rem
     }
   }
 }
@@ -462,12 +470,25 @@ form.note{
     }
   }
 }
+
 .loader{
   margin:0 auto;
   width:2rem;
   height:2rem;
   border:0.3rem solid var(--text-color);
   border-right:0.3rem solid transparent;
+  border-radius:50%;
+  animation-duration:1s;
+  animation-name:spin;
+  animation-iteration-count:infinite;
+  animation-timing-function:linear;
+}
+
+.auth-loader{
+  width:1rem;
+  height:1rem;
+  border:0.15rem solid white;
+  border-right:0.15rem solid transparent;
   border-radius:50%;
   animation-duration:1s;
   animation-name:spin;

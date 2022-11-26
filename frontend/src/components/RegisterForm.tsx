@@ -1,4 +1,6 @@
 import { FormEvent, useState } from 'react'
+import BaseFetchResponse from '../types/main'
+import AuthLoader from './AuthLoader'
 
 export const RegisterForm = ({ callback }: { callback: () => void } ) => {
   const [email, setEmail] = useState('')
@@ -19,7 +21,7 @@ export const RegisterForm = ({ callback }: { callback: () => void } ) => {
       body: JSON.stringify({ email, password })
     })
     .then(res => res.json())
-    .then(data => {
+    .then((data: Omit<BaseFetchResponse<unknown>, 'data'>) => {
       if(!data.success) throw(data.message)
       callback()
     })
@@ -31,9 +33,11 @@ export const RegisterForm = ({ callback }: { callback: () => void } ) => {
     <form onSubmit={e => handleSubmit(e)}>
       <input type="email" required placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
       <input type="password" required placeholder='Heslo' onChange={(e) => setPassword(e.target.value)} />
-      <span className='error' style={{ visibility: (error === null ? 'hidden' : 'initial') }}>{error && error}</span>
       {error && <span className='error'>{error && error}</span>}
-      <button disabled={loading}>Registrovať</button>
+      <button disabled={loading}>
+        Registrovať
+        {loading && <AuthLoader />}
+      </button>
     </form>
   )
 }
