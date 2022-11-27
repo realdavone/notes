@@ -7,7 +7,7 @@ interface AuthContextType {
   user: User | null,
   setUser: (user: User) => void
   login: (email: string, password: string) => any
-  logout: () => void
+  logout: (cb?: Function) => void
 }
 
 const INITIAL_CONTEXT: AuthContextType = {
@@ -44,7 +44,7 @@ export const AuthContextProvider = ({ children }: any) => {
     }
   }
 
-  const logout = () => {
+  const logout = (cb?: Function) => {
     fetch(`${import.meta.env['VITE_API_BASE_URL']}auth/logout`, {
       method: 'POST',
       credentials: 'include',
@@ -56,6 +56,7 @@ export const AuthContextProvider = ({ children }: any) => {
     .then(data => {
       setUser(null)
       setSavedUser(null)
+      if(cb) cb()
     })
     .catch(error => console.log(error))
   }

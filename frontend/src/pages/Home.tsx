@@ -1,4 +1,5 @@
 import { useContext, useMemo, useState } from "react"
+import { Filter } from "../components/Filter"
 import Loader from "../components/Loader"
 import { SingleNote } from "../components/SingleNote"
 import { AuthContext } from "../context/auth"
@@ -14,7 +15,7 @@ export type Note = {
   category: '' | 'personal' | 'finance' | 'health'
 }
 
-type NoteFilter = Partial<Note>
+export type NoteFilter = Partial<Note>
 
 export const categories: Record<Note['category'], { label: string, class: string }> = {
   '': { label: '', class: '' },
@@ -69,16 +70,21 @@ const OnlineNotes = ({ filter }: { filter: NoteFilter }) => {
       <Loader />
       :
       <>
-      <section className="notes">
-        { filteredNotes === null || filteredNotes?.length === 0 
-        ?
-        <span>Nenašli sa žiadne poznámky</span>
+        {
+        error
+        ? 
+        <span>{error}</span>
         :
-        filteredNotes!.map((note) =>
-          <SingleNote note={note} key={note._id}/>
-        )}
-      </section>
-      { error && <span>error</span> }
+        <section className="notes">
+          { filteredNotes === null || filteredNotes?.length === 0 
+          ?
+          <span>Nenašli sa žiadne poznámky</span>
+          :
+          filteredNotes!.map((note) =>
+            <SingleNote note={note} key={note._id}/>
+          )}
+        </section>
+        }
       </>
     }
     </>
@@ -91,18 +97,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="filter">
-        <select name={'category'} onChange={(e) => {
-          setFilter({...filter, [e.target.name]: (e.target.value || null)})
-        }}>
-          {Object.keys(categories).map((category) => <option value={category} key={category}>{categories[category as Note['category']].label || 'Všetky kategórie'}</option>)}</select>
-        <div className="filter-item">
-          <label htmlFor="important">Len dôležité</label>
-          <input id="important" type="checkbox" name="isImportant" onChange={(e) => {
-            setFilter({ ...filter, [e.target.name]: (e.target.checked || null) })
-          }} />
-        </div>
-      </section>
+      <Filter filter={filter} setFilter={setFilter} />
       {user === null
       ?
       <LocalStorageNotes filter={filter} />

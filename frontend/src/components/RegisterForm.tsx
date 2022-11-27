@@ -1,16 +1,21 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useRef } from 'react'
 import BaseFetchResponse from '../types/main'
 import AuthLoader from './AuthLoader'
 
 export const RegisterForm = ({ callback }: { callback: () => void } ) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const repeatedPassword = useRef<HTMLInputElement | null>(null)
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
+
+    if(repeatedPassword.current!.value !== password){
+      return setError('Heslá sa nezhodujú')
+    }
 
     setLoading(true)
     setError(null)
@@ -31,8 +36,9 @@ export const RegisterForm = ({ callback }: { callback: () => void } ) => {
 
   return (
     <form onSubmit={e => handleSubmit(e)}>
-      <input type="email" required placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" required placeholder='Heslo' onChange={(e) => setPassword(e.target.value)} />
+      <input type="email" autoComplete='off' required placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
+      <input type="password" autoComplete='off' required placeholder='Heslo' onChange={(e) => setPassword(e.target.value)} />
+      <input type="password" autoComplete='off' required placeholder='Zopakovat heslo' ref={repeatedPassword} />
       {error && <span className='error'>{error && error}</span>}
       <button disabled={loading}>
         Registrovať

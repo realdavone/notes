@@ -10,13 +10,15 @@
   --outline-color:darkslategray;
 
   --background-dark:#1f1f21;
-  --background-light:#ffffff;
+  --background-light:#f1eded;
   --text-color-dark:#ffffff;
   --text-color-light:#262628;
   --input-background-dark:#343434;
   --input-background-light:#ebebeb;
   --nav-background-dark:#18181a;
-  --nav-background-light:#f1eded;
+  --nav-background-light:#ffffff;
+  --note-background-dark:#18181a;
+  --note-background-light:#ffffff;
 
   --container-padding:2rem;
 }
@@ -33,12 +35,14 @@ body{
     --background:var(--background-dark);
     --input-background:var(--input-background-dark);
     --nav-background:var(--nav-background-dark);
+    --note-background:var(--note-background-dark);
   }
   &[data-dark-theme=false]{
     --text-color:var(--text-color-light);
     --background:var(--background-light);
     --input-background:var(--input-background-light);
     --nav-background:var(--nav-background-light);
+    --note-background:var(--note-background-light);
   }
 
   &::-webkit-scrollbar{width:15px;height:15px;}
@@ -84,7 +88,7 @@ nav{
   .left{
     margin-right:auto;
     
-    a {
+    a{
       display:flex;
       align-items:center;
       gap:0.75rem;
@@ -96,26 +100,28 @@ nav{
     align-items:center;
     gap:1rem;
 
-    a{
-      background-color:var(--theme-color);
-      width:2.25rem;
-      aspect-ratio:1;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      border-radius:0.25rem;
-      font-weight:900;
-      border-radius:50%;
-      color:white;
-      span{
-        font-size:1.25rem;
+    button{
+      &.theme{
+        transition:0.6s ease transform;
+
+        &:hover{
+          transform: rotate(45deg);
+        }
+      }
+      &:last-of-type{
+        background-color:var(--theme-color);
+        padding:0.5rem 0.75rem;
+        border-radius:1rem;
+        font-weight:700;
+        font-size:0.75rem;
+        color:white
       }
     }
   }
 }
 
 section.filter{
-  outline:2px solid var(--outline-color);
+  background-color:var(--note-background);
   width:100%;
   max-width:600px;
   align-self:center;
@@ -176,7 +182,7 @@ section.auth{
   margin:0 auto;
   max-width:400px;
   width:100%;
-  outline:2px solid var(--outline-color);
+  background-color:var(--note-background);
   padding:1rem;
   border-radius:1.25rem;
 
@@ -259,16 +265,17 @@ span.category{
 
 section.notes{
   display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
   gap:2rem;
 
   article{
     padding:1rem;
-    outline:2px solid var(--outline-color);
-    border-radius:1.25rem;
+    border-radius:1rem;
     display:flex;
     flex-direction:column;
     gap:0.75rem;
+    background-color:var(--note-background);
+    transition:0.2s ease all;
 
     div.top-row{
       display:flex;
@@ -295,11 +302,12 @@ section.notes{
         -webkit-line-clamp:2;
         -webkit-box-orient:vertical;  
         overflow:hidden;
+        font-size:1rem;
       }
     }
 
     div.content{
-      font-size:0.8rem;
+      font-size:0.75rem;
       display:-webkit-box;
       -webkit-line-clamp:2;
       -webkit-box-orient:vertical;  
@@ -310,7 +318,7 @@ section.notes{
     button{
       background-color:var(--theme-color);
       padding:0.5rem 0.75rem;
-      border-radius:0.75rem;
+      border-radius:0.5rem;
       font-size:0.75rem;
       font-weight:700;
       align-self:flex-end;
@@ -325,12 +333,12 @@ div.note{
   max-width:700px;
   width:100%;
   padding:1.5rem;
-  outline:2px solid var(--outline-color);
   border-radius:1.5rem;
   display:flex;
   flex-direction:column;
   gap:0.5rem;
   overflow:hidden;
+  background-color:var(--note-background);
 
   header{
     display:flex;
@@ -393,7 +401,6 @@ section.filter{
   margin:0 auto;
   width:100%;
   max-width:600px;
-  outline:2px solid var(--outline-color);
   padding:1rem;
   border-radius:0.75rem;
 }
@@ -405,7 +412,7 @@ form.note{
   margin:0 auto;
   max-width:600px;
   width:100%;
-  outline:2px solid var(--outline-color);
+  background-color:var(--note-background);
   padding:1rem;
   border-radius:1rem;
 
