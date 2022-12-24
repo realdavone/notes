@@ -47,7 +47,7 @@ const LocalStorageNotes = ({ filter }: { filter: NoteFilter }) => {
     <section className="notes">
       {filteredNotes.length === 0 
       ?
-      <span>Nie sú uložené žiadne poznámky</span>
+      <span className="no-notes">Nie sú uložené žiadne poznámky</span>
       :
       filteredNotes!.sort((a, b) => parseInt(b.timestamp) - parseInt(a.timestamp)).map((note) => <SingleNote note={note} key={note._id}/>
       )}
@@ -78,7 +78,7 @@ const OnlineNotes = ({ filter }: { filter: NoteFilter }) => {
         <section className="notes">
           { filteredNotes === null || filteredNotes?.length === 0 
           ?
-          <span>Nenašli sa žiadne poznámky</span>
+          <span className="no-notes">Nenašli sa žiadne poznámky</span>
           :
           filteredNotes!.map((note) =>
             <SingleNote note={note} key={note._id}/>

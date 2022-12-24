@@ -16,7 +16,7 @@ export const NewNote = () => {
 
   const handleNote = (note: PartialNote) => {
     if(user === null){
-      setNotes([...notes, { ...note as Omit<Note, '_id' | 'timestamp'>, _id: Date.now().toString(), timestamp: Date.now().toString()}])
+      setNotes([...notes, { ...note as Omit<Note, '_id' | 'timestamp'>, _id: self.crypto.randomUUID(), timestamp: Date.now().toString()}])
       navigate(-1)
     } else {
       fetch(`${import.meta.env['VITE_API_BASE_URL']}notes/new`, {

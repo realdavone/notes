@@ -21,7 +21,7 @@ export const login =  async (req, res) => {
 
   const token = jwt.sign({ id: foundUser.id, email }, process.env.JWT_KEY, { expiresIn: '24h' })
 
-  res.cookie('access-token', token, { httpOnly: true, sameSite: 'none', secure: true }).status(200).json({ success: true, user: rest })
+  res.cookie('access-token', token, { httpOnly: true, sameSite: 'none', secure: true, maxAge: 7 * 24 * 60 * 60 * 1000 }).status(200).json({ success: true, user: rest })
 }
 
 export const register = async (req, res) => {
