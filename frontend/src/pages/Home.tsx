@@ -26,6 +26,7 @@ export const categories: Record<Note['category'], { label: string, class: string
 
 const getFitleredNotes = (data: Note[], filter: NoteFilter): Note[] => {
   if(data === null) return []
+  
   return data.filter((note) => {
     if(Object.keys(filter).length === 0) return note
     for(let key of Object.keys(filter)){
@@ -43,13 +44,12 @@ const LocalStorageNotes = ({ filter }: { filter: NoteFilter }) => {
     return getFitleredNotes(savedNotes, filter)
   }, [filter])
 
+  if(filteredNotes.length === 0) return <span className="no-notes">Nie sú uložené žiadne poznámky</span>
+
   return (
     <section className="notes">
-      {filteredNotes.length === 0 
-      ?
-      <span className="no-notes">Nie sú uložené žiadne poznámky</span>
-      :
-      filteredNotes!.sort((a, b) => parseInt(b.timestamp) - parseInt(a.timestamp)).map((note) => <SingleNote note={note} key={note._id}/>
+      {filteredNotes!.sort((a, b) => parseInt(b.timestamp) - parseInt(a.timestamp)).map((note) => 
+        <SingleNote note={note} key={note._id}/>
       )}
     </section>
   )
@@ -61,33 +61,19 @@ const OnlineNotes = ({ filter }: { filter: NoteFilter }) => {
   const filteredNotes = useMemo(() => {
     return getFitleredNotes(data!, filter)
   }, [filter, data])
+
+  if(loading) return <Loader />
+
+  if(error) return <span>{error}</span>
+
+  if(filteredNotes === null || filteredNotes?.length === 0) return <span className="no-notes">Nenašli sa žiadne poznámky</span>
   
   return (
-    <>
-    {
-      loading
-      ?
-      <Loader />
-      :
-      <>
-        {
-        error
-        ? 
-        <span>{error}</span>
-        :
-        <section className="notes">
-          { filteredNotes === null || filteredNotes?.length === 0 
-          ?
-          <span className="no-notes">Nenašli sa žiadne poznámky</span>
-          :
-          filteredNotes!.map((note) =>
-            <SingleNote note={note} key={note._id}/>
-          )}
-        </section>
-        }
-      </>
-    }
-    </>
+    <section className="notes">
+      {filteredNotes!.map((note) =>
+        <SingleNote note={note} key={note._id}/>
+      )}
+    </section>
   )
 }
 

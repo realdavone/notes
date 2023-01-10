@@ -56,7 +56,7 @@ export const AuthContextProvider = ({ children }: any) => {
     .then(data => {
       setUser(null)
       setSavedUser(null)
-      if(cb) cb()
+      cb?.()
     })
     .catch(error => console.log(error))
   }
