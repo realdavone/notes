@@ -9,7 +9,11 @@ import { Auth } from './pages/Auth'
 import { ReactElement, useContext } from 'react'
 import { AuthContext } from './context/auth'
 
-export const GuardedRoute = ({ children, conditionToRedirect, redirect }: { children: ReactElement, conditionToRedirect: boolean, redirect: string }) => {
+export const GuardedRoute = ({ children, conditionToRedirect, redirect }:{
+  children: ReactElement,
+  conditionToRedirect: boolean,
+  redirect: string
+}) => {
   if(conditionToRedirect) return <Navigate to={ redirect } />
   return children
 }

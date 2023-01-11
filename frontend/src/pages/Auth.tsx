@@ -10,9 +10,7 @@ export const Auth = () => {
   const [selectedForm, setSelectedForm] = useState<FormType>('LOGIN')
   const navigate = useNavigate()
   
-  const callbackAfterFormSubmit = useCallback(() => {
-    navigate('/')
-  }, [])
+  const callbackAfterFormSubmit = useCallback(() => navigate('/'), [])
 
   const forms: Record<FormType, ReactNode> = {
     'LOGIN': <LoginForm callback={ callbackAfterFormSubmit } />,

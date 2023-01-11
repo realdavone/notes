@@ -16,7 +16,10 @@ export const SingleNote = ({ note }: { note: Note }) => {
         {note.isImportant && <div className="important"><span className="material-icons">priority_high</span></div>}
       </div>
       <div className='content'>{note.content}</div>
-      <button onClick={() => navigate(`/note/${note._id}`)}>Otvoriť</button>
+      <button onClick={() => navigate(`/note/${note._id}`)}>
+        Otvoriť
+        <span className="material-icons-outlined">chevron_right</span>
+      </button>
     </article>
   )
 }

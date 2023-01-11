@@ -21,10 +21,10 @@ export default function Nav() {
           <span className="material-icons">create</span>
         </Link>
         <button className="theme" onClick={() => toggleTheme()} title={`${darkTheme ? 'Tmavý' : 'Svetlý'} režim`}>
-          <span className="material-icons">{darkTheme ? 'dark_mode' : 'light_mode'}</span>
+          <span className="material-icons-outlined">{darkTheme ? 'dark_mode' : 'light_mode'}</span>
         </button>
         <button onClick={() => { user === null ? navigate('/auth') : logout(() => navigate('/')) }}>
-          {`${user === null ? 'Log in' : 'Log out'}`}
+          {`${user === null ? 'Prihlásiť' : 'Odhlásiť'}`}
         </button>
       </div>
     </nav>

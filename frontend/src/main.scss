@@ -2,7 +2,7 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-family:'Open Sans', sans-serif;
 }
 
 :root{
@@ -83,7 +83,7 @@ nav{
   position:sticky;
   top:0;
   background-color:var(--nav-background);
-  transition:0.2s ease all;
+  transition:0.2s ease background-color;
 
   .left{
     margin-right:auto;
@@ -110,9 +110,8 @@ nav{
       }
       &:last-of-type{
         background-color:var(--theme-color);
-        padding:0.5rem 0.75rem;
-        border-radius:1rem;
-        font-weight:700;
+        padding:0.25rem 0.85rem;
+        border-radius:3px;
         font-size:0.75rem;
         color:white
       }
@@ -320,14 +319,12 @@ section.notes{
     }
 
     button{
-      background-color:var(--theme-color);
-      padding:0.5rem 0.75rem;
-      border-radius:0.5rem;
       font-size:0.75rem;
       font-weight:700;
       align-self:flex-end;
       margin-top:auto;
-      color:white;
+      display:flex;
+      align-items:center;
     }
   }  
 }

@@ -21,10 +21,14 @@ export const AuthContext = createContext<AuthContextType>(INITIAL_CONTEXT)
 
 export const AuthContextProvider = ({ children }: any) => {
   const [savedUser, setSavedUser] = useLocalStorage<User | null>('user', null)
-
+  const [savedUserExpiryTime, setSavedUserExpiryTime] = useLocalStorage<number | null>('savedUserExpiryTime', null)
   const [user, setUser] = useState<User | null>(savedUser)
 
-  const login = async (email: string, password: string): Promise<void> => {
+  if(new Date().getTime() > savedUserExpiryTime!) {
+    logout()
+  }
+
+  async function login(email: string, password: string): Promise<void> {
     try {
       const res = await fetch(`${import.meta.env['VITE_API_BASE_URL']}auth/login`, {
         method: 'POST',
@@ -39,12 +43,13 @@ export const AuthContextProvider = ({ children }: any) => {
 
       setUser(data.user)
       setSavedUser(data.user)
-    } catch (error: any) {
+      setSavedUserExpiryTime(data.expiresOn)
+    } catch (error: unknown) {
       throw(error)
     }
   }
 
-  const logout = (cb?: Function) => {
+  async function logout(cb?: Function): Promise<void> {
     fetch(`${import.meta.env['VITE_API_BASE_URL']}auth/logout`, {
       method: 'POST',
       credentials: 'include',
@@ -53,9 +58,10 @@ export const AuthContextProvider = ({ children }: any) => {
       if(res.ok) return res.json()
       throw('Nastala chyba')
     })
-    .then(data => {
+    .then(() => {
       setUser(null)
       setSavedUser(null)
+      setSavedUserExpiryTime(null)
       cb?.()
     })
     .catch(error => console.log(error))

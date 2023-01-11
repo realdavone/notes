@@ -17,7 +17,10 @@ export type Note = {
 
 export type NoteFilter = Partial<Note>
 
-export const categories: Record<Note['category'], { label: string, class: string }> = {
+export const categories: Record<Note['category'], {
+  label: string,
+  class: string
+}> = {
   '': { label: '', class: '' },
   personal: { label: 'Osobné', class: 'per' },
   finance: { label: 'Financie', class: 'fin' },
@@ -37,14 +40,18 @@ const getFitleredNotes = (data: Note[], filter: NoteFilter): Note[] => {
   })
 }
 
-const LocalStorageNotes = ({ filter }: { filter: NoteFilter }) => {
+const LocalStorageNotes = ({
+  filter
+}:{
+  filter: NoteFilter
+}) => {
   const [savedNotes] = useLocalStorage<Note[]>('notes', [])
 
   const filteredNotes = useMemo(() => {
     return getFitleredNotes(savedNotes, filter)
   }, [filter])
 
-  if(filteredNotes.length === 0) return <span className="no-notes">Nie sú uložené žiadne poznámky</span>
+  if(filteredNotes.length === 0) return <span className="no-notes">Nenašli sa žiadne poznámky</span>
 
   return (
     <section className="notes">
@@ -55,7 +62,11 @@ const LocalStorageNotes = ({ filter }: { filter: NoteFilter }) => {
   )
 }
 
-const OnlineNotes = ({ filter }: { filter: NoteFilter }) => {
+const OnlineNotes = ({
+  filter
+}:{
+  filter: NoteFilter
+}) => {
   const { loading, error, data } = useFetch<Note[]>('notes')
 
   const filteredNotes = useMemo(() => {
@@ -77,18 +88,30 @@ const OnlineNotes = ({ filter }: { filter: NoteFilter }) => {
   )
 }
 
-export default function Home() {
+function Notes({
+  filter
+}:{
+  filter: NoteFilter
+}) {
   const { user } = useContext(AuthContext)
+
+  return (
+    <>
+      {user === null ?
+      <LocalStorageNotes filter={filter} />
+      :
+      <OnlineNotes filter={filter} />}
+    </>
+  )
+}
+
+export default function Home() {
   const [filter, setFilter] = useState<NoteFilter>({})
 
   return (
     <>
       <Filter filter={filter} setFilter={setFilter} />
-      {user === null
-      ?
-      <LocalStorageNotes filter={filter} />
-      :
-      <OnlineNotes filter={filter} />}
+      <Notes filter={filter}/>
     </>
   )
 }
