@@ -6,6 +6,35 @@ import { useFetch } from "../hooks/useFetch"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import { categories, Note as NoteType } from "./Home"
 
+const NoteWrapper = ({ note, onDelete }: {
+  note: NoteType
+  onDelete: () => void
+}) => {
+  return (
+    <div className="note">
+    {categories[note.category].label && <div>{categories[note.category].label}</div>}
+    <header>
+      {note.isImportant && <div className="important" title="Dôležité"><span className="material-icons">priority_high</span></div>}
+      <div className="controls">
+        <Link to={'edit'} state={note}>
+          <button>
+            <span className="material-icons-outlined">edit_note</span>
+          </button>
+        </Link>
+        <button onClick={() => onDelete()}>
+          <span className="material-icons-outlined">delete</span>
+        </button>
+      </div>
+    </header>
+    <div className="date">
+      <span className="material-icons-outlined">schedule</span>
+      {new Date(parseInt(note.timestamp)).toLocaleString('sk-SK', { weekday: 'short', year: '2-digit', month: 'short', day: 'numeric', hour:'numeric', minute: '2-digit' })}
+    </div>
+    <h1>{note.title}</h1>
+    <div className="content">{note.content}</div>
+  </div>
+  )
+}
 
 const OnlineNote = ({ noteId } : { noteId: string }) => {
   const navigate = useNavigate()
@@ -24,48 +53,13 @@ const OnlineNote = ({ noteId } : { noteId: string }) => {
     })
   }
 
-  return (
-    <div className="note">
-      {loading 
-      ? 
-      <Loader /> 
-      :
-      <>
-      <>
-        {note ?
-        <>
-          {categories[note.category].label && <div>{categories[note.category].label}</div>}
-          <header>
-            {note.isImportant && <div className="important" title="Dôležité"><span className="material-icons">priority_high</span></div>}
-            <div className="controls">
-              <Link to={'edit'} state={note}>
-                <button>
-                  <span className="material-icons-outlined">edit_note</span>
-                </button>
-              </Link>
-              <button onClick={() => deleteOnlineNote()}>
-                <span className="material-icons-outlined">delete</span>
-              </button>
-            </div>
-          </header>
-          <div className="date">
-            <span className="material-icons-outlined">schedule</span>
-            {new Date(parseInt(note.timestamp)).toLocaleString('sk-SK', { weekday: 'short', year: '2-digit', month: 'short', day: 'numeric', hour:'numeric', minute: '2-digit' })}
-          </div>
-          <h1>{note.title}</h1>
-          <div className="content">{note.content}</div>
-        </>
-        :
-        <div className="not-found">Poznámka neexistuje</div>
-        }
-        </>
-        <>
-        {error && <span>{error}</span>}
-        </>
-      </>
-      }
-    </div>
-  )
+  if(loading) return <Loader />
+
+  if(error) return <span>{error}</span>
+
+  if(!note) return <div className="not-found">Poznámka neexistuje</div>
+
+  return <NoteWrapper note={note} onDelete={deleteOnlineNote} />
 }
 
 const LocalNote = ({ noteId } : { noteId: string }) => {
@@ -79,36 +73,9 @@ const LocalNote = ({ noteId } : { noteId: string }) => {
     navigate(-1)
   }
 
-  return (
-    <div className="note">
-      {note ?
-      <>
-        <span className={`${categories[note.category].class} category`}>{categories[note.category].label}</span>
-        <header>
-          {note.isImportant && <div className="important" title="Dôležité"><span className="material-icons">priority_high</span></div>}
-          <div className="controls">
-            <Link to={'edit'} state={note}>
-              <button>
-                <span className="material-icons-outlined">edit</span>
-              </button>
-            </Link>
-            <button onClick={() => deleteLocalNote()}>
-              <span className="material-icons-outlined">delete</span>
-            </button>
-          </div>
-        </header>
-        <div className="date">
-          <span className="material-icons-outlined">schedule</span>
-          {new Date(parseInt(note.timestamp)).toLocaleString('sk-SK', { weekday: 'short', year: '2-digit', month: 'short', day: 'numeric', hour:'numeric', minute: '2-digit' })}
-        </div>
-        <h1>{note.title}</h1>
-        <div className="content">{note.content}</div>
-      </>
-      :
-      <div className="not-found">Poznámka neexistuje</div>
-      }
-    </div>
-  )
+  if(!note) return <div className="not-found">Poznámka neexistuje</div>
+
+  return <NoteWrapper note={note} onDelete={deleteLocalNote}/>
 }
 
 export const Note = () => {

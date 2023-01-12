@@ -1,4 +1,4 @@
-import Nav from './components/Nav'
+import Header from './components/Header'
 import Home from './pages/Home'
 import { NewNote } from './pages/NewNote'
 
@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div className="App">
-      <Nav />
+      <Header />
       <main className='container content'>
         <Routes>
           <Route path='/note'>

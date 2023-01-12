@@ -9,12 +9,9 @@ export default function Nav() {
   const navigate = useNavigate()
 
   return (
-    <nav className="container">
+    <header className="container">
       <div className="left">
-        <Link to={'/'} style={{ fontWeight: '700', fontSize: '1.25rem' }}>
-          <img src="favicon.svg" alt="Icon" width={'30px'} />
-          myNotes
-        </Link>
+        <Link to={'/'} style={{ fontWeight: '700', fontSize: '1.25rem' }}>myNotes</Link>
       </div>
       <div className="right">
         <Link tabIndex={0} to={'/note/new'} title='Nová poznámka'>
@@ -27,6 +24,6 @@ export default function Nav() {
           {`${user === null ? 'Prihlásiť' : 'Odhlásiť'}`}
         </button>
       </div>
-    </nav>
+    </header>
   )
 }
