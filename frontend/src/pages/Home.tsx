@@ -95,14 +95,9 @@ function Notes({
 }) {
   const { user } = useContext(AuthContext)
 
-  return (
-    <>
-      {user === null ?
-      <LocalStorageNotes filter={filter} />
-      :
-      <OnlineNotes filter={filter} />}
-    </>
-  )
+  if(user) return <OnlineNotes filter={filter} />
+
+  return <LocalStorageNotes filter={filter} />
 }
 
 export default function Home() {

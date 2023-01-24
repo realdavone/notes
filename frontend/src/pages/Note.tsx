@@ -6,6 +6,18 @@ import { useFetch } from "../hooks/useFetch"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import { categories, Note as NoteType } from "./Home"
 
+function SimilarNotes({ note, id, isLocal }: { note?: NoteType, id?: string, isLocal: boolean }) {
+  let items: Array<string> = new Array(5)
+
+  items.fill(isLocal ? 'local' : 'online')
+
+  return (
+    <>
+    {items.map(item => <span>{item}</span>)}
+    </>
+  )
+}
+
 const NoteWrapper = ({ note, onDelete }: {
   note: NoteType
   onDelete: () => void
@@ -59,7 +71,11 @@ const OnlineNote = ({ noteId } : { noteId: string }) => {
 
   if(!note) return <div className="not-found">Poznámka neexistuje</div>
 
-  return <NoteWrapper note={note} onDelete={deleteOnlineNote} />
+  return (
+    <div className="note-outter">
+      <NoteWrapper note={note} onDelete={deleteOnlineNote} />
+    </div>
+  )
 }
 
 const LocalNote = ({ noteId } : { noteId: string }) => {
@@ -75,7 +91,11 @@ const LocalNote = ({ noteId } : { noteId: string }) => {
 
   if(!note) return <div className="not-found">Poznámka neexistuje</div>
 
-  return <NoteWrapper note={note} onDelete={deleteLocalNote}/>
+  return (
+    <div className="note-outter">
+      <NoteWrapper note={note} onDelete={deleteLocalNote}/>
+    </div>
+  )
 }
 
 export const Note = () => {

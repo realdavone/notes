@@ -24,9 +24,7 @@ export const AuthContextProvider = ({ children }: any) => {
   const [savedUserExpiryTime, setSavedUserExpiryTime] = useLocalStorage<number | null>('savedUserExpiryTime', null)
   const [user, setUser] = useState<User | null>(savedUser)
 
-  if(new Date().getTime() > savedUserExpiryTime!) {
-    logout()
-  }
+  if(new Date().getTime() > savedUserExpiryTime!) logout()
 
   async function login(email: string, password: string): Promise<void> {
     try {
