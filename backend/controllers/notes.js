@@ -1,9 +1,19 @@
 import Note from '../models/note.js'
+import getPagination from '../middleware/pagination.js'
 
 export const getNotes = async (req, res) => {
+  const { page } = req.body
+
   try {
     const notes = await Note.find({ author: req.user.id }).sort({ timestamp: 'descending' })
-    res.status(200).json(notes) 
+
+    const { results, numberOfPages, totalResult } = getPagination({
+      data: notes,
+      currentPage: page ?? 1,
+      perPage: 10
+    })
+
+    res.status(200).json({ notes: results, numberOfPages, totalResult }) 
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
   }

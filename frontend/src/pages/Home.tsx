@@ -27,8 +27,10 @@ export const categories: Record<Note['category'], {
   health: { label: 'Zdravie', class: 'hel' }
 }
 
-const getFitleredNotes = (data: Note[], filter: NoteFilter): Note[] => {
+const getFitleredNotes = (data: Note[] | null, filter: NoteFilter): Note[] => {
   if(data === null) return []
+
+  console.log(data)
   
   return data.filter((note) => {
     if(Object.keys(filter).length === 0) return note
@@ -67,11 +69,12 @@ const OnlineNotes = ({
 }:{
   filter: NoteFilter
 }) => {
-  const { loading, error, data } = useFetch<Note[]>('notes')
+  const { loading, error, data } = useFetch<{ notes: Note[], numberOfPages: number, totalResult: number }>('notes')
 
   const filteredNotes = useMemo(() => {
-    return getFitleredNotes(data!, filter)
-  }, [filter, data])
+    if(data?.notes) return getFitleredNotes(data.notes, filter)
+    else return []
+  }, [filter, data?.notes])
 
   if(loading) return <Loader />
 

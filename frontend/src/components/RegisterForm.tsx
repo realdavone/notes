@@ -38,7 +38,7 @@ export const RegisterForm = ({ callback }: { callback: () => void } ) => {
     <form onSubmit={e => handleSubmit(e)}>
       <input type="email" autoComplete='off' required placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
       <input type="password" autoComplete='off' required placeholder='Heslo' onChange={(e) => setPassword(e.target.value)} />
-      <input type="password" autoComplete='off' required placeholder='Zopakovat heslo' ref={repeatedPassword} />
+      <input type="password" autoComplete='off' required placeholder='Zopakovať heslo' ref={repeatedPassword} />
       {error && <span className='error'>{error && error}</span>}
       <button disabled={loading}>
         Registrovať

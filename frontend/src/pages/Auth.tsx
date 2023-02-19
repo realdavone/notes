@@ -2,7 +2,6 @@ import { ReactNode, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LoginForm } from '../components/LoginForm'
 import { RegisterForm } from '../components/RegisterForm'
-import { Title } from '../components/Title'
 
 type FormType = 'LOGIN' | 'REGISTER'
 
@@ -18,15 +17,12 @@ export const Auth = () => {
   }
 
   return (
-    <>
-      <Title title={'Autentifikácia'}/>
-      <section className="auth">
-        <div className='buttons'>
-          <button className={selectedForm === 'REGISTER' ? 'active' : ''} onClick={() => setSelectedForm('REGISTER')}>Registrácia</button>
-          <button className={selectedForm === 'LOGIN' ? 'active' : ''} onClick={() => setSelectedForm('LOGIN')}>Prihlásenie</button>
-        </div>
-        {forms[selectedForm]}
-      </section>
-    </>
+    <section className="auth">
+      <div className='buttons'>
+        <button className={selectedForm === 'REGISTER' ? 'active' : ''} onClick={() => setSelectedForm('REGISTER')}>Registrácia</button>
+        <button className={selectedForm === 'LOGIN' ? 'active' : ''} onClick={() => setSelectedForm('LOGIN')}>Prihlásenie</button>
+      </div>
+      {forms[selectedForm]}
+    </section>
   )
 }
