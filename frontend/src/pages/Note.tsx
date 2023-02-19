@@ -5,18 +5,7 @@ import { AuthContext } from "../context/auth"
 import { useFetch } from "../hooks/useFetch"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import { categories, Note as NoteType } from "./Home"
-
-function SimilarNotes({ note, id, isLocal }: { note?: NoteType, id?: string, isLocal: boolean }) {
-  let items: Array<string> = new Array(5)
-
-  items.fill(isLocal ? 'local' : 'online')
-
-  return (
-    <>
-    {items.map(item => <span>{item}</span>)}
-    </>
-  )
-}
+import getRelativeTime from '../utils/relative-time'
 
 const NoteWrapper = ({ note, onDelete }: {
   note: NoteType
@@ -40,7 +29,7 @@ const NoteWrapper = ({ note, onDelete }: {
     </header>
     <div className="date">
       <span className="material-icons-outlined">schedule</span>
-      {new Date(parseInt(note.timestamp)).toLocaleString('sk-SK', { weekday: 'short', year: '2-digit', month: 'short', day: 'numeric', hour:'numeric', minute: '2-digit' })}
+      {getRelativeTime(note.timestamp)}
     </div>
     <h1>{note.title}</h1>
     <div className="content">{note.content}</div>
@@ -69,7 +58,7 @@ const OnlineNote = ({ noteId } : { noteId: string }) => {
 
   if(error) return <span>{error}</span>
 
-  if(!note) return <div className="not-found">Poznámka neexistuje</div>
+  if(!note) return <></>
 
   return (
     <div className="note-outter">

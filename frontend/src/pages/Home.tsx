@@ -80,7 +80,7 @@ const OnlineNotes = ({
 
   if(error) return <span>{error}</span>
 
-  if(filteredNotes === null || filteredNotes?.length === 0) return <span className="no-notes">Nenašli sa žiadne poznámky</span>
+  if(!filteredNotes) return <span className="no-notes">Nenašli sa žiadne poznámky</span>
   
   return (
     <section className="notes">

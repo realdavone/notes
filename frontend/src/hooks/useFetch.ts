@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 export const useFetch = <T>(endpoint: string, options?: Object) => {
   const [data, setData] = useState<null | T>(null)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState<null | string>(null)
 
   useEffect(() => {
@@ -16,13 +16,18 @@ export const useFetch = <T>(endpoint: string, options?: Object) => {
     })
 
     fetch(request)
-    .then((res) => {
-      if (res.ok) return res.json()
-      throw "Nastala chyba"
-    })
-    .then((data: T)  => setData(data))
-    .catch((error) => setError(error))
-    .finally(() => setLoading(false))
+      .then(async (res) => {
+        if (res.ok) return res.json()
+        else return await res.json().then(error => { throw new Error(error.message) })
+      })
+      .then((data: T)  => setData(data))
+      .catch((error) => {
+        setData(null)
+        setError(error.message || 'Nastala chyba')
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [endpoint])
 
   return { data, loading, error }

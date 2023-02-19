@@ -25,7 +25,9 @@ export const getNote = (req, res) => {
 
   Note.findById(id).then((data, error) => {
     if(error) return res.status(500).json({ success: false, message: error.message })
+
     if(data._doc.author.toString() !== userId) return res.status(400).json({ success: false, message: 'Nemáte prístup k tejto poznámke' })
+
     res.status(200).json(data)
   }).catch((error) => {
     res.status(500).json({ success: false, message: error.message })
