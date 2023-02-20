@@ -12,28 +12,27 @@ const NoteWrapper = ({ note, onDelete }: {
   onDelete: () => void
 }) => {
   return (
-    <div className="note">
-    {categories[note.category].label && <div>{categories[note.category].label}</div>}
-    <header>
-      {note.isImportant && <div className="important" title="Dôležité"><span className="material-icons">priority_high</span></div>}
-      <div className="controls">
-        <Link to={'edit'} state={note}>
-          <button>
-            <span className="material-icons-outlined">edit_note</span>
+    <div className={`note ${note.isImportant && 'imp'}`}>
+      <header>
+        {categories[note.category].label && <div>{categories[note.category].label}</div>}
+        <div className="controls">
+          <Link to={'edit'} state={note}>
+            <button>
+              <span className="material-icons-outlined">edit_note</span>
+            </button>
+          </Link>
+          <button onClick={() => onDelete()}>
+            <span className="material-icons-outlined">delete</span>
           </button>
-        </Link>
-        <button onClick={() => onDelete()}>
-          <span className="material-icons-outlined">delete</span>
-        </button>
+        </div>
+      </header>
+      <div className="date">
+        <span className="material-icons-outlined">schedule</span>
+        {getRelativeTime(note.timestamp)}
       </div>
-    </header>
-    <div className="date">
-      <span className="material-icons-outlined">schedule</span>
-      {getRelativeTime(note.timestamp)}
+      <h1>{note.title}</h1>
+      <div className="content">{note.content}</div>
     </div>
-    <h1>{note.title}</h1>
-    <div className="content">{note.content}</div>
-  </div>
   )
 }
 

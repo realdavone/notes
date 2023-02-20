@@ -29,8 +29,6 @@ export const categories: Record<Note['category'], {
 
 const getFitleredNotes = (data: Note[] | null, filter: NoteFilter): Note[] => {
   if(data === null) return []
-
-  console.log(data)
   
   return data.filter((note) => {
     if(Object.keys(filter).length === 0) return note

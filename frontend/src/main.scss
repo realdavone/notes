@@ -1,4 +1,4 @@
-*{
+*,*::after,*::before{
   margin:0;
   padding:0;
   box-sizing:border-box;
@@ -105,12 +105,7 @@ header{
   p.banner{
     font-size: 0.75rem;
     margin-top: 15px;
-  }
-
-  a.logo {
-    display: block;
-    font-size: 1.5rem;
-    font-weight: 700;
+    opacity: 0.5;
   }
 
   div.buttons {
@@ -149,7 +144,10 @@ header{
   }
 
   button.login{
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     width: 100%;
     padding: 8px;
     background-color: var(--theme-color);
@@ -157,12 +155,18 @@ header{
     border-radius: 4px;
     height: 36px;
     color: white;
+
+    &:disabled{
+      opacity:0.5
+    }
   }
 
-  div.logo-holder{
+  a.logo-holder{
     display: flex;
     gap: 10px;
     align-items: center;
+    font-size: 1.25rem;
+    font-weight: 700;
   }
 }
 
@@ -170,7 +174,7 @@ section.filter{
   background-color:var(--note-background);
   width:100%;
   align-self:center;
-  padding:1rem;
+  padding:0.5rem;
   position:relative;
   display:flex;
   align-items:stretch;
@@ -245,7 +249,7 @@ section.auth{
 
     input{
       padding:0.75rem;
-      border-radius:0.5rem;
+      border-radius:0.25rem;
 
       &:focus{
         outline:2px solid var(--outline-color);
@@ -255,7 +259,7 @@ section.auth{
       background-color:var(--theme-color);
       color:#ffffff;
       padding:0.75rem;
-      border-radius:0.5rem;
+      border-radius:0.25rem;
       font-size:0.75rem;
       font-weight:700;
       display:flex;
@@ -276,8 +280,7 @@ section.auth{
 
 span.category{
   align-self:flex-start;
-  padding:0.15rem 0.45rem;
-  border-radius:0.5rem;
+  padding:0.1rem 0.25rem;
   font-size:0.65rem;
   background-color:gray;
   color:#ffffff;
@@ -302,13 +305,15 @@ span.category{
 section.notes{
 
   a{
-    padding:0.75rem;
+    padding:0.95rem;
     display:flex;
     flex-direction:column;
     gap:0.75rem;
     background-color:var(--note-background);
     transition:0.2s ease all;
     margin-bottom: 2px;
+    position: relative;
+    overflow: hidden;
 
     div.top-row{
       display:flex;
@@ -358,6 +363,16 @@ section.notes{
       align-items:center;
     }
 
+    &.imp::after {
+      content: '';
+      position: absolute;
+      top:-12px;
+      left:-12px;
+      background-color: crimson;
+      width:25px;
+      height: 25px;
+      transform: rotate(45deg);
+    }
     &:last-of-type{
       margin-bottom: 0;
     }
@@ -376,16 +391,17 @@ div.note{
   max-width:700px;
   width:100%;
   padding:1rem;
-  border-radius:0.75rem;
   display:flex;
   flex-direction:column;
   gap:0.5rem;
   overflow:hidden;
   background-color:var(--note-background);
+  position: relative;
 
   header{
     display:flex;
     align-items:center;
+    flex-direction: row;
     gap:1rem;
     background-color:inherit;
     max-width: unset;
@@ -429,6 +445,16 @@ div.note{
   div.not-found{
     align-self:center;
   }
+  &.imp::after {
+    content: '';
+    position: absolute;
+    top:-12px;
+    left:-12px;
+    background-color: crimson;
+    width:25px;
+    height: 25px;
+    transform: rotate(45deg);
+  }
 }
 
 div.important{
@@ -463,7 +489,7 @@ form.note{
   input, textarea{
     width:100%!important;
     padding:0.75rem;
-    border-radius:0.75rem;
+    border-radius:0.25rem;
 
     &:focus{
       outline:2px solid var(--outline-color)
@@ -472,7 +498,7 @@ form.note{
 
   select{
     padding:0.5rem;
-    border-radius:0.75rem;
+    border-radius:0.25rem;
 
     &:focus{
       outline:2px solid var(--outline-color)

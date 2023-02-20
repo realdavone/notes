@@ -5,6 +5,9 @@ export const useFetch = <T>(endpoint: string, options?: Object) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<null | string>(null)
 
+  const controller = new AbortController()
+  const signal = controller.signal
+
   useEffect(() => {
     setLoading(true)
     setData(null)
@@ -12,7 +15,8 @@ export const useFetch = <T>(endpoint: string, options?: Object) => {
 
     const request = new Request(`${import.meta.env['VITE_API_BASE_URL']}${endpoint}`, options || {
       method: 'GET',
-      credentials: 'include'
+      credentials: 'include',
+      signal
     })
 
     fetch(request)
@@ -28,6 +32,10 @@ export const useFetch = <T>(endpoint: string, options?: Object) => {
       .finally(() => {
         setLoading(false)
       })
+
+    return () => {
+      import.meta.env.PROD && controller.abort()
+    }
   }, [endpoint])
 
   return { data, loading, error }

@@ -1,19 +1,33 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { AuthContext } from "../context/auth"
 import { ThemeContext } from "../context/theme"
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Logo from '../assets/logo.svg'
+import AuthLoader from "./AuthLoader"
 
 export default function Nav() {
   const { user, logout } = useContext(AuthContext)
   const { darkTheme, toggleTheme } = useContext(ThemeContext)
   const navigate = useNavigate()
+  const [logoutLoading, setLogoutLoading] = useState(false)
+
+  const handleLogout = async () => {
+    setLogoutLoading(true)
+
+    try {
+      await logout(() => navigate('/'))
+    }
+    catch (error) { console.log(error) }
+    finally { setLogoutLoading(false) }
+  }
 
   return (
     <header>
-      <div className="row logo-holder">
-        <img src={Logo} alt="Logo" height="30" />
-        <Link to={'/'} className='logo'>MYNOTES</Link>
+      <div className="row">
+        <Link to={'/'} className='logo logo-holder'>
+          <img src={Logo} alt="Logo" height="30" />
+          MYNOTES
+        </Link>
       </div>
       <div className="row">
         <div className="buttons">
@@ -28,9 +42,14 @@ export default function Nav() {
         </div>
       </div>
       <div className="row">
-        <button className="login" onClick={() => { user === null ? navigate('/auth') : logout(() => navigate('/')) }}>
-          {`${user === null ? 'Prihlásiť' : 'Odhlásiť'}`}
-        </button>
+        {user === null
+        ?
+        <button className="login" onClick={() => navigate('/auth')}>Prihlásiť</button>
+        :
+        <button className="login" onClick={handleLogout} disabled={logoutLoading}>
+          {logoutLoading ? 'Odhlasovanie' : 'Odhlásiť'}
+          {logoutLoading && <AuthLoader />}
+        </button>}
         <p className="banner">
           Je zapnutá {user === null ? 'offline' : 'online'} verzia mynotes.
           Poznámky sa ukladajú {user === null ? 'lokálne' : 'na server'}.
