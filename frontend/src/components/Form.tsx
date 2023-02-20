@@ -1,10 +1,11 @@
 import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Note } from '../pages/Home'
+import AuthLoader from "./AuthLoader"
 
 interface PropsInterace {
   note?: Note
-  handleNote: (note: PartialNote) => void
+  handleNote: (note: PartialNote) => Promise<void>
 }
 
 export type PartialNote = Partial<Note>
@@ -20,10 +21,17 @@ export const Form = ({ note, handleNote }: PropsInterace) => {
     category: note?.category || ''
   })
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
+  const [loading, setLoading] = useState(false)
 
-    handleNote(noteToSubmit)
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+
+    try {
+      await handleNote(noteToSubmit)
+    }
+    catch (error) { console.log(error) }
+    finally { setLoading(false) }
   }
 
   return (
@@ -49,8 +57,11 @@ export const Form = ({ note, handleNote }: PropsInterace) => {
         } />
       </div>
       <div className="buttons">
-        <button tabIndex={0} className="cancel" type='button' onClick={() => navigate(-1)}>Zrušiť</button>
-        <button tabIndex={0} className="submit" type='submit'>Uložiť'</button>
+        <button disabled={loading} tabIndex={0} className="cancel" type='button' onClick={() => navigate(-1)}>Zrušiť</button>
+        <button disabled={loading} tabIndex={0} className="submit" type='submit'>
+          {loading ? 'Ukladám' : 'Uložiť'}
+          {loading && <AuthLoader />}
+        </button>
       </div>
     </form>
   )

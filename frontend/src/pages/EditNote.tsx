@@ -15,7 +15,7 @@ export const EditNote = () => {
 
   const navigate = useNavigate()
 
-  const handleNote = (note: PartialNote) => {
+  const handleNote = async (note: PartialNote) => {
     if(user === null){
       setNotes(notes.map(savedNote => {
         if(savedNote._id !== note!._id) return savedNote
@@ -23,7 +23,7 @@ export const EditNote = () => {
       }))
       navigate(-1)
     } else {
-      fetch(`${import.meta.env['VITE_API_BASE_URL']}notes/edit`, {
+      return fetch(`${import.meta.env['VITE_API_BASE_URL']}notes/edit`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

@@ -62,12 +62,12 @@ a{
 }
 
 input, textarea, select{
-  border:none;
-  outline:none;
-  background-color:var(--input-background);
-  color:var(--text-color);
-  resize:none;
-  font-size:0.75rem;
+  border: none;
+  outline-color: transparent;
+  background-color: var(--input-background);
+  color: var(--text-color);
+  resize: none;
+  font-size: 0.75rem;
 }
 
 span{
@@ -170,6 +170,21 @@ header{
   }
 }
 
+div.user-info{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+
+  span:first-of-type{
+    font-size: 1rem;
+  }
+
+  span.email{
+    font-size: 0.75rem;
+  }
+}
+
 section.filter{
   background-color:var(--note-background);
   width:100%;
@@ -222,20 +237,12 @@ section.auth{
   width:100%;
   padding:1rem;
 
-  div.buttons{
-    display:flex;
-    gap:1rem;
-
-    button{
-      width:50%;
-      font-weight:bold;
-      opacity:0.25;
-
-      &.active{
-        opacity:1;
-      }
+  button.switch-button{
+    &:hover{
+      text-decoration: underline;
     }
   }
+  
   form{
     display:flex;
     flex-direction:column;
@@ -524,17 +531,26 @@ form.note{
     gap:0.75rem;
 
     button{
-      padding:0.5rem 1rem;
-      border-radius:0.5rem;
-      font-size:0.75rem;
+      padding:0.45rem 0.75rem;
+      border-radius:0.25rem;
+      font-size:0.85rem;
       color:white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap:5px;
+      width: 90px;
 
       &.cancel{
         background-color:#dc143cc0;
       }
 
       &.submit{
-        background-color:#008000c0;
+        background-color:var(--theme-color);
+      }
+
+      &:disabled{
+        opacity: 0.5;
       }
     }
   }
@@ -554,8 +570,10 @@ form.note{
 }
 
 .auth-loader{
-  width:1rem;
-  height:1rem;
+  max-width: 1rem;
+  max-height: 1rem;
+  min-width: 1rem;
+  min-height: 1rem;
   border:0.15rem solid white;
   border-right:0.15rem solid transparent;
   border-radius:50%;
@@ -577,11 +595,20 @@ form.note{
   div.root {
     flex-direction: column;
   }
+  div.user-info{
+    display: none!important;
+  }
   header{
     display: flex;
-    justify-content: space-between;
     flex-direction: row;
+    justify-content: space-between;
     max-width: unset;
+
+    button.login{
+      max-width: 69px;
+      min-width: 69px;
+      overflow: hidden;
+    }
   }
   p.banner{
     display: none;
@@ -599,5 +626,8 @@ form.note{
         display: none;
       }
     }
+  }
+  .mob-hide{
+    display: none;
   }
 }

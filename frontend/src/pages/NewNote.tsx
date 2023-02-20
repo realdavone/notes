@@ -14,12 +14,12 @@ export const NewNote = () => {
   const { user } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  const handleNote = (note: PartialNote) => {
+  const handleNote = async (note: PartialNote) => {
     if(user === null){
       setNotes([...notes, { ...note as Omit<Note, '_id' | 'timestamp'>, _id: self.crypto.randomUUID(), timestamp: Date.now().toString()}])
       navigate(-1)
     } else {
-      fetch(`${import.meta.env['VITE_API_BASE_URL']}notes/new`, {
+      return fetch(`${import.meta.env['VITE_API_BASE_URL']}notes/new`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

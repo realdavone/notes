@@ -18,11 +18,14 @@ export const Auth = () => {
 
   return (
     <section className="auth">
-      <div className='buttons'>
-        <button className={selectedForm === 'REGISTER' ? 'active' : ''} onClick={() => setSelectedForm('REGISTER')}>Registrácia</button>
-        <button className={selectedForm === 'LOGIN' ? 'active' : ''} onClick={() => setSelectedForm('LOGIN')}>Prihlásenie</button>
-      </div>
       {forms[selectedForm]}
+      {
+        selectedForm === 'LOGIN'
+        ?
+        <button className='switch-button' onClick={() => setSelectedForm('REGISTER')}>Ešte nemáte účet?</button>
+        :
+        <button className='switch-button' onClick={() => setSelectedForm('LOGIN')}>Už máte účet?</button>
+      }
     </section>
   )
 }

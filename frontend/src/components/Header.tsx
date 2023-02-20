@@ -35,7 +35,7 @@ export default function Nav() {
             <span className="material-icons">create</span>
             <span>Napísať poznámku</span>
           </NavLink>
-          <button className="theme" onClick={() => toggleTheme()} title={`${darkTheme ? 'Tmavý' : 'Svetlý'} režim`}>
+          <button tabIndex={0} className="theme" onClick={() => toggleTheme()} title={`${darkTheme ? 'Tmavý' : 'Svetlý'} režim`}>
             <span className="material-icons-outlined">{darkTheme ? 'dark_mode' : 'light_mode'}</span>
             <span>{darkTheme ? 'Tmavý' : 'Svetlý'} režim</span>
           </button>        
@@ -46,10 +46,16 @@ export default function Nav() {
         ?
         <button className="login" onClick={() => navigate('/auth')}>Prihlásiť</button>
         :
+        <>
         <button className="login" onClick={handleLogout} disabled={logoutLoading}>
-          {logoutLoading ? 'Odhlasovanie' : 'Odhlásiť'}
+          {logoutLoading ? <span className="mob-hide">'Odhlasovanie'</span> : 'Odhlásiť'}
           {logoutLoading && <AuthLoader />}
-        </button>}
+        </button>
+        <div className="user-info">
+          <span className="material-icons-outlined">account_circle</span>
+          <span className="email">{user.email}</span>
+        </div>
+        </>}
         <p className="banner">
           Je zapnutá {user === null ? 'offline' : 'online'} verzia mynotes.
           Poznámky sa ukladajú {user === null ? 'lokálne' : 'na server'}.
