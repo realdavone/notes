@@ -22,7 +22,7 @@ export default function Nav() {
   }
 
   return (
-    <header>
+    <header className="main-header">
       <div className="row">
         <Link to={'/'} className='logo logo-holder'>
           <img src={Logo} alt="Logo" height="30" />
