@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { Form } from "../components/Form"
 import { AuthContext } from "../context/auth"
 import { PartialNote } from "../components/Form"
@@ -31,6 +31,8 @@ export const NewNote = () => {
       })
     }
   }
+
+  useEffect(() => { document.title = 'Nová poznámka / mynotes' }, [])
 
   return (
     <>

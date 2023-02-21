@@ -90,7 +90,6 @@ header{
   gap:15px;
   max-width: 285px;
   width: 100%;
-  padding-top: 10px;
 
   div.row{
     padding:5px;
@@ -249,11 +248,6 @@ section.auth{
     gap:1rem;
     width:100%;
 
-    span.error{
-      color:crimson;
-      font-size:0.75rem!important;
-    }
-
     input{
       padding:0.75rem;
       border-radius:0.25rem;
@@ -327,13 +321,6 @@ section.notes{
       align-items:center;
       justify-content:space-between;
       gap:0.5rem;
-
-      div.timestamp{
-        color: gray;
-        font-weight: 700;
-        font-size: 0.75rem;
-        margin-left: auto;
-      }
     }
 
     div.title{
@@ -567,6 +554,25 @@ form.note{
   animation-name:spin;
   animation-iteration-count:infinite;
   animation-timing-function:linear;
+}
+
+.timestamp{
+  color: gray;
+  font-weight: 700;
+  font-size: 0.75rem;
+  margin:0 auto;
+}
+
+.error{
+  color:crimson;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.noresults{
+  font-size: 0.85rem;
+  text-align: center;
+  padding-top: 10px;
 }
 
 .auth-loader{

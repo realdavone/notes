@@ -1,6 +1,7 @@
 import React, { FormEvent, useContext, useState } from 'react'
 import { AuthContext } from '../context/auth'
 import AuthLoader from './AuthLoader'
+import Error from './Error'
 
 export const LoginForm = ({ callback }: { callback: () => void }) => {
   const { login } = useContext(AuthContext)
@@ -29,7 +30,7 @@ export const LoginForm = ({ callback }: { callback: () => void }) => {
     <form onSubmit={e => handleSubmit(e)}>
       <input type="email" required placeholder='Email' onChange={(e) => setEmail(e.target.value)} autoComplete='email' />
       <input type="password" required placeholder='Heslo' onChange={(e) => setPassword(e.target.value)} autoComplete='current-password'/>
-      {error && <span className='error'>{error && error}</span>}
+      {error && <Error message={error} />}
       <button disabled={loading}>
         Prihlásiť
         {loading && <AuthLoader />}

@@ -30,7 +30,7 @@ function App() {
           <Routes>
             <Route path='/note'>
               <Route path='new' element={ <NewNote /> }/>
-              <Route path=':id' element={ <Note /> }/>
+              <Route path=':id' element={ <Note /> } />
               <Route path=':id/edit' element={ <EditNote /> } />
             </Route>
             <Route path='auth' element={

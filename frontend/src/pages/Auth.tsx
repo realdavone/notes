@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LoginForm } from '../components/LoginForm'
 import { RegisterForm } from '../components/RegisterForm'
@@ -15,6 +15,8 @@ export const Auth = () => {
     'LOGIN': <LoginForm callback={ callbackAfterFormSubmit } />,
     'REGISTER': <RegisterForm callback={ callbackAfterFormSubmit } />
   }
+
+  useEffect(() => { document.title = 'Autorizácia / mynotes' }, [])
 
   return (
     <section className="auth">

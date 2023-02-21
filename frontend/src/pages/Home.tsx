@@ -1,6 +1,8 @@
-import { useContext, useMemo, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 import { Filter } from "../components/Filter"
 import Loader from "../components/Loader"
+import NoResults from "../components/NoResults"
+import Error from "../components/Error"
 import { SingleNote } from "../components/SingleNote"
 import { AuthContext } from "../context/auth"
 import { useFetch } from "../hooks/useFetch"
@@ -51,7 +53,7 @@ const LocalStorageNotes = ({
     return getFitleredNotes(savedNotes, filter)
   }, [filter])
 
-  if(filteredNotes.length === 0) return <span className="no-notes">Nenašli sa žiadne poznámky</span>
+  if(filteredNotes.length === 0) return <NoResults message="Nenašli sa žiadne poznámky" />
 
   return (
     <section className="notes">
@@ -76,9 +78,9 @@ const OnlineNotes = ({
 
   if(loading) return <Loader />
 
-  if(error) return <span>{error}</span>
+  if(error) return <Error message={error} />
 
-  if(!filteredNotes) return <span className="no-notes">Nenašli sa žiadne poznámky</span>
+  if(!filteredNotes) return <NoResults message="Nenašli sa žiadne poznámky" />
   
   return (
     <section className="notes">
@@ -95,6 +97,8 @@ function Notes({
   filter: NoteFilter
 }) {
   const { user } = useContext(AuthContext)
+
+  useEffect(() => { document.title = 'Domov / mynotes' }, [])
 
   if(user) return <OnlineNotes filter={filter} />
 

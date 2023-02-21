@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { Note } from "./Home"
 import { Form, PartialNote } from "../components/Form"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { AuthContext } from "../context/auth"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 
@@ -35,6 +35,8 @@ export const EditNote = () => {
       })
     }
   }
+
+  useEffect(() => { document.title = 'Upraviť poznámku / mynotes' }, [])
 
   return (
     <div>

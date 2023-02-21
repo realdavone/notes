@@ -1,6 +1,7 @@
 import { FormEvent, useState, useRef } from 'react'
 import BaseFetchResponse from '../types/main'
 import AuthLoader from './AuthLoader'
+import Error from './Error'
 
 export const RegisterForm = ({ callback }: { callback: () => void } ) => {
   const [email, setEmail] = useState('')
@@ -39,7 +40,7 @@ export const RegisterForm = ({ callback }: { callback: () => void } ) => {
       <input type="email" autoComplete='off' required placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
       <input type="password" autoComplete='off' required placeholder='Heslo' onChange={(e) => setPassword(e.target.value)} />
       <input type="password" autoComplete='off' required placeholder='Zopakovať heslo' ref={repeatedPassword} />
-      {error && <span className='error'>{error && error}</span>}
+      {error && <Error message={error} />}
       <button disabled={loading}>
         Registrovať
         {loading && <AuthLoader />}

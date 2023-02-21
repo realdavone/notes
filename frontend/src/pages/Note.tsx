@@ -1,11 +1,14 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import Loader from "../components/Loader"
+import Error from "../components/Error"
+import NoResults from "../components/NoResults"
+import CategoryLabel from "../components/CategoryLabel"
 import { AuthContext } from "../context/auth"
 import { useFetch } from "../hooks/useFetch"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import { categories, Note as NoteType } from "./Home"
-import getRelativeTime from '../utils/relative-time'
+import Timestamp from "../components/Timestamp"
 
 const NoteWrapper = ({ note, onDelete }: {
   note: NoteType
@@ -14,7 +17,7 @@ const NoteWrapper = ({ note, onDelete }: {
   return (
     <div className={`note ${note.isImportant && 'imp'}`}>
       <header>
-        {categories[note.category].label && <div>{categories[note.category].label}</div>}
+        {categories[note.category].label && <CategoryLabel category={note.category} />}
         <div className="controls">
           <Link to={'edit'} state={note}>
             <button>
@@ -26,10 +29,7 @@ const NoteWrapper = ({ note, onDelete }: {
           </button>
         </div>
       </header>
-      <div className="date">
-        <span className="material-icons-outlined">schedule</span>
-        {getRelativeTime(note.timestamp)}
-      </div>
+      <Timestamp timestamp={note.timestamp}/>
       <h1>{note.title}</h1>
       <div className="content">{note.content}</div>
     </div>
@@ -55,7 +55,7 @@ const OnlineNote = ({ noteId } : { noteId: string }) => {
 
   if(loading) return <Loader />
 
-  if(error) return <span>{error}</span>
+  if(error) return <Error message={error}/>
 
   if(!note) return <></>
 
@@ -77,7 +77,7 @@ const LocalNote = ({ noteId } : { noteId: string }) => {
     navigate(-1)
   }
 
-  if(!note) return <div className="not-found">Poznámka neexistuje</div>
+  if(!note) return <NoResults message={'Poznámka neexistuje'}/>
 
   return (
     <div className="note-outter">
@@ -89,6 +89,8 @@ const LocalNote = ({ noteId } : { noteId: string }) => {
 export const Note = () => {
   const location = useLocation()
   const { user } = useContext(AuthContext)
+
+  useEffect(() => { document.title = `${location.pathname.split('/')[2]}/ mynotes `}, [])
 
   return (
     <>
