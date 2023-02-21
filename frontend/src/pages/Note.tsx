@@ -19,12 +19,10 @@ const NoteWrapper = ({ note, onDelete }: {
       <header>
         {categories[note.category].label && <CategoryLabel category={note.category} />}
         <div className="controls">
-          <Link to={'edit'} state={note}>
-            <button>
-              <span className="material-icons-outlined">edit_note</span>
-            </button>
+          <Link className="note-control-button" to={'edit'} state={note}>
+            <span className="material-icons-outlined">edit_note</span>
           </Link>
-          <button onClick={() => onDelete()}>
+          <button className="note-control-button" onClick={() => onDelete()}>
             <span className="material-icons-outlined">delete</span>
           </button>
         </div>
@@ -90,7 +88,7 @@ export const Note = () => {
   const location = useLocation()
   const { user } = useContext(AuthContext)
 
-  useEffect(() => { document.title = `${location.pathname.split('/')[2]}/ mynotes `}, [])
+  useEffect(() => { document.title = `${location.pathname.split('/')[2]} / mynotes `}, [])
 
   return (
     <>

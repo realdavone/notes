@@ -87,13 +87,12 @@ div.root {
 header.main-header{
   display: flex;
   flex-direction: column;
-  gap:15px;
   max-width: 285px;
   width: 100%;
+  min-height: 55px;
 
   div.row{
-    padding:5px;
-    padding-bottom: 15px;
+    padding: 15px 10px;
     border-bottom: 1px solid #ffffff10;
 
     &:last-of-type{
@@ -405,19 +404,6 @@ div.note{
       display:flex;
       align-items:center;
       gap:0.5rem;
-
-      button{
-        background-color:#80808040;
-        border-radius:50%;
-        width:2rem;
-        height:2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        span{
-          font-size:0.85rem;
-        }
-      }
     }
   }
   div.date{
@@ -543,6 +529,19 @@ form.note{
   }
 }
 
+.note-control-button{
+  background-color:#80808040;
+  border-radius:50%;
+  width:2rem;
+  height:2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  span{
+    font-size:0.85rem;
+  }
+}
+
 .loader{
   margin:15px auto;
   width:2rem;
@@ -604,11 +603,12 @@ form.note{
   div.user-info{
     display: none!important;
   }
-  header{
+  header.main-header{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     max-width: unset;
+    align-items: center;
 
     button.login{
       max-width: 69px;
