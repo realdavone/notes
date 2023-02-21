@@ -8,6 +8,7 @@ import { EditNote } from './pages/EditNote'
 import { Auth } from './pages/Auth'
 import { ReactElement, useContext } from 'react'
 import { AuthContext } from './context/auth'
+import Error from './components/Error'
 
 export const GuardedRoute = ({ children, conditionToRedirect, redirect }:{
   children: ReactElement,
@@ -39,6 +40,7 @@ function App() {
               </GuardedRoute>
             }/>
             <Route path='/' element={ <Home /> }/>
+            <Route path='/*' element={ <Error message='404 Táto stránka neexistuje' /> }/>
           </Routes>        
         </main>
       </div>
