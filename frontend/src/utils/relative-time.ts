@@ -6,7 +6,7 @@ export default function(date: string): string {
 
   if(differenceInMillis > 87840000) return new Intl.DateTimeFormat('sk-SK', {
     dateStyle: 'short',
-    timeStyle: 'medium' 
+    timeStyle: 'short' 
   }).format(then)
 
   if(differenceInMillis > 3660000) return new Intl.RelativeTimeFormat('sk', {

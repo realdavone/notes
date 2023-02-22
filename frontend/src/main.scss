@@ -320,6 +320,11 @@ section.notes{
       align-items:center;
       justify-content:space-between;
       gap:0.5rem;
+
+      .timestamp{
+        margin:unset;
+        margin-left:auto!important;
+      }
     }
 
     div.title{
