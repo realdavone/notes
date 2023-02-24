@@ -24,8 +24,6 @@ export const AuthContextProvider = ({ children }: any) => {
   const [savedUserExpiryTime, setSavedUserExpiryTime] = useLocalStorage<number | null>('savedUserExpiryTime', null)
   const [user, setUser] = useState<User | null>(savedUser)
 
-  if(new Date().getTime() > savedUserExpiryTime!) logout()
-
   async function login(email: string, password: string): Promise<void> {
     try {
       const res = await fetch(`${import.meta.env['VITE_API_BASE_URL']}auth/login`, {
@@ -64,6 +62,8 @@ export const AuthContextProvider = ({ children }: any) => {
     })
     .catch(error => console.log(error))
   }
+
+  if(new Date().getTime() > savedUserExpiryTime!) logout()
 
   return (
     <AuthContext.Provider value={{ user, setUser, login, logout }}>

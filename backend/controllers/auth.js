@@ -19,7 +19,7 @@ export const login =  async (req, res) => {
 
   const { password: userPassword, __v, ...rest } = foundUser._doc
 
-  const token = jwt.sign({ id: foundUser.id, email }, process.env.JWT_KEY, { expiresIn: '24h' })
+  const token = jwt.sign({ id: foundUser.id, email }, process.env.JWT_KEY, { expiresIn: '7d' })
 
   const maxAge = 7 * 24 * 60 * 60 * 1000
 

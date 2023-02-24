@@ -9,9 +9,8 @@ export const auth = (req, res, next) => {
   try {
     const decoded = jwt.verify(req?.cookies['access-token'], process.env.JWT_KEY)
     req.user = decoded
+    return next()
   } catch (error) {
     return res.status(400).json({ success: false, message: 'Neplatný token' })
   }
-
-  return next()
 }
