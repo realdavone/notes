@@ -1,11 +1,11 @@
-import Note from '../models/note.js'
 import getPagination from '../middleware/pagination.js'
+import { createNoteInDB, editNoteInDB, getNoteFromDB, getNotesFromDB, removeNoteFromDB } from '../features/note.js'
 
 export const getNotes = async (req, res) => {
   const { page } = req.body
 
   try {
-    const notes = await Note.find({ author: req.user.id }).sort({ timestamp: 'descending' })
+    const notes = await getNotesFromDB({ author: req.user.id })
 
     const { results, numberOfPages, totalResult } = getPagination({
       data: notes,
@@ -13,34 +13,41 @@ export const getNotes = async (req, res) => {
       perPage: 10
     })
 
-    res.status(200).json({ notes: results, numberOfPages, totalResult }) 
+    res.status(200).json({
+      notes: results,
+      numberOfPages,
+      totalResult
+    }) 
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+    res.sendStatus(500)
   }
 }
 
-export const getNote = (req, res) => {
+export const getNote = async (req, res) => {
   const { id } = req.params
-  const { id: userId } = req.user 
+  const { id: userId } = req.user
 
-  Note.findById(id).then((data, error) => {
-    if(error) return res.status(500).json({ success: false, message: error.message })
-
-    if(data._doc.author.toString() !== userId) return res.status(400).json({ success: false, message: 'Nemáte prístup k tejto poznámke' })
-
-    res.status(200).json(data)
-  }).catch((error) => {
-    res.status(500).json({ success: false, message: error.message })
-  })
+  try {
+    const getNoteFromUser = getNoteFromDB(userId)
+    const note = await getNoteFromUser({ _id: id })
+    
+    res.status(200).json(note)
+  } catch (error) {
+    res.sendStatus(500)
+  }
 }
 
 export const postNote = async (req, res) => {
   const { title, content, isImportant, category } = req.body
   try {
-    await Note.create({ title, content, category, isImportant, author: req.user.id })
-    res.status(200).json({ success: true, message: 'Poznámka bola vytvorená' })
+    await createNoteInDB({ title, content, category, isImportant, author: req.user.id })
+    
+    res.status(200).json({
+      success: true,
+      message: 'Poznámka bola vytvorená'
+    })
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message })
+    res.sendStatus(500)
   }
 }
 
@@ -48,33 +55,30 @@ export const editNote = async (req, res) => {
   const { title, content, isImportant, category, id } = req.body
   const { id: userId } = req.user 
 
-  Note.findById(id).then((data, error) => {
-    if(error) return res.status(500).json({ success: false, message: error.message })
-    if(data._doc.author.toString() !== userId) return res.status(400).json({ success: false, message: 'Môžete upraviť len svoje poznámky' })
-    
-    data.title = title
-    data.content = content
-    data.isImportant = isImportant
-    data.category = category
+  try {
+    const editNoteInDBWithOptions = editNoteInDB(id, userId)
+    await editNoteInDBWithOptions({ title, content, isImportant, category })
 
-    data.save()
-
-    res.status(200).json({ success: true, message: 'Poznámka bola upravená' })
-  }).catch((error) => {
-    res.status(500).json({ success: false, message: error.message })
-  })
+    res.status(200).json({
+      success: true,
+      message: 'Poznámka bola upravená'
+    })
+  } catch (error) {
+    res.sendStatus(500)
+  }
 }
 
-export const removeNote = (req, res) => {
+export const removeNote = async (req, res) => {
   const { id } = req.body
-  const { id: userId } = req.user 
+  const { id: userId } = req.user
 
-  Note.findById(id).then((data, error) => {
-    if(error) return res.status(500).json({ success: false, message: error.message })
-    if(data._doc.author.toString() !== userId) return res.status(400).json({ success: false, message: 'Môžete mazať len svoje poznámky' })
-    data.remove()
-    res.status(200).json({ success: true, message: 'Poznámka bola zmazaná' })
-  }).catch((error) => {
-    res.status(500).json({ success: false, message: error.message })
-  })
+  try {
+    await removeNoteFromDB(id, userId)
+    res.status(200).json({
+      success: true,
+      message: 'Poznámka bola zmazaná'
+    })
+  } catch (error) {
+    res.sendStatus(500)
+  }
 }

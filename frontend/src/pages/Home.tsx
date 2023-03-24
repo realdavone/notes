@@ -80,7 +80,7 @@ const OnlineNotes = ({
 
   if(error) return <Error message={error} />
 
-  if(!filteredNotes) return <NoResults message="Nenašli sa žiadne poznámky" />
+  if(filteredNotes.length === 0) return <NoResults message="Nenašli sa žiadne poznámky" />
   
   return (
     <section className="notes">

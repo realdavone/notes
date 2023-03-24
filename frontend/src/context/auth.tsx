@@ -60,7 +60,7 @@ export const AuthContextProvider = ({ children }: any) => {
       setSavedUserExpiryTime(null)
       cb?.()
     })
-    .catch(error => console.log(error))
+    .catch(console.error)
   }
 
   if(new Date().getTime() > savedUserExpiryTime!) logout()
