@@ -1,0 +1,23 @@
+span.category{
+  align-self:flex-start;
+  padding:0.1rem 0.25rem;
+  font-size:0.65rem;
+  background-color:gray;
+  color:#ffffff;
+
+  &:empty{
+    display:none;
+  }
+
+  &.per{
+    background-color:red!important;
+  }
+
+  &.fin{
+    background-color:green!important;
+  }
+
+  &.hel{
+    background-color:chocolate!important;
+  }
+}

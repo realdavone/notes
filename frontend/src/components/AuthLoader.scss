@@ -1,0 +1,13 @@
+.auth-loader{
+  max-width: 1rem;
+  max-height: 1rem;
+  min-width: 1rem;
+  min-height: 1rem;
+  border:0.15rem solid white;
+  border-right:0.15rem solid transparent;
+  border-radius:50%;
+  animation-duration:1s;
+  animation-name:spin;
+  animation-iteration-count:infinite;
+  animation-timing-function:linear;
+}

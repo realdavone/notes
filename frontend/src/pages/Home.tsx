@@ -7,6 +7,7 @@ import { SingleNote } from "../components/SingleNote"
 import { AuthContext } from "../context/auth"
 import { useFetch } from "../hooks/useFetch"
 import { useLocalStorage } from "../hooks/useLocalStorage"
+import './Home.scss'
 
 export type Note = {
   _id: string,
@@ -42,16 +43,10 @@ const getFitleredNotes = (data: Note[] | null, filter: NoteFilter): Note[] => {
   })
 }
 
-const LocalStorageNotes = ({
-  filter
-}:{
-  filter: NoteFilter
-}) => {
+const LocalStorageNotes = ({ filter }: { filter: NoteFilter }) => {
   const [savedNotes] = useLocalStorage<Note[]>('notes', [])
 
-  const filteredNotes = useMemo(() => {
-    return getFitleredNotes(savedNotes, filter)
-  }, [filter])
+  const filteredNotes = useMemo(() => getFitleredNotes(savedNotes, filter), [filter])
 
   if(filteredNotes.length === 0) return <NoResults message="Nenašli sa žiadne poznámky" />
 
@@ -64,11 +59,7 @@ const LocalStorageNotes = ({
   )
 }
 
-const OnlineNotes = ({
-  filter
-}:{
-  filter: NoteFilter
-}) => {
+const OnlineNotes = ({ filter }: { filter: NoteFilter }) => {
   const { loading, error, data } = useFetch<{ notes: Note[], numberOfPages: number, totalResult: number }>('notes')
 
   const filteredNotes = useMemo(() => {
@@ -91,11 +82,7 @@ const OnlineNotes = ({
   )
 }
 
-function Notes({
-  filter
-}:{
-  filter: NoteFilter
-}) {
+function Notes({ filter }: { filter: NoteFilter }) {
   const { user } = useContext(AuthContext)
 
   useEffect(() => { document.title = 'Domov / mynotes' }, [])

@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Note } from '../pages/Home'
 import AuthLoader from "./AuthLoader"
+import './Form.scss'
 
 interface PropsInterace {
   note?: Note

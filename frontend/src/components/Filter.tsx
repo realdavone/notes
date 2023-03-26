@@ -1,10 +1,11 @@
 import { Note } from "../pages/Home"
 import { categories } from "../pages/Home"
 import { NoteFilter } from "../pages/Home"
+import './Filter.scss'
 
 export const Filter = ({ filter, setFilter }: { filter: NoteFilter, setFilter: (filter: NoteFilter) => void }) => {
   return (
-    <section className="filter">
+    <fieldset className="filter">
       <select name={'category'} onChange={(e) => {
         setFilter({ ...filter, [e.target.name]: (e.target.value || null) })
       }}>
@@ -15,6 +16,6 @@ export const Filter = ({ filter, setFilter }: { filter: NoteFilter, setFilter: (
           setFilter({ ...filter, [e.target.name]: (e.target.checked || null) })
         }} />
       </div>
-    </section>
+    </fieldset>
   )
 }

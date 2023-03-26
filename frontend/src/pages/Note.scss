@@ -1,0 +1,64 @@
+div.note-outter{
+  display:flex;
+  gap:1rem;
+  margin:0 auto;
+  width:100%;
+  max-width:1200px;
+}
+
+div.note{
+  max-width:700px;
+  width:100%;
+  padding:1rem;
+  display:flex;
+  flex-direction:column;
+  gap:0.5rem;
+  overflow:hidden;
+  background-color:var(--note-background);
+  position: relative;
+
+  header{
+    display:flex;
+    align-items:center;
+    flex-direction: row;
+    gap:1rem;
+    background-color:inherit;
+    max-width: unset;
+
+    div.controls{
+      margin-left:auto;
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+    }
+  }
+  div.date{
+    font-size:0.75rem;
+    color:gray;
+    display:flex;
+    align-self:center;
+    align-items:center;
+    gap:0.5rem;
+
+    span{
+      font-size:1rem;
+    }
+  }
+  div.content{
+    margin-top:1rem;
+    font-size:0.9rem;
+  }
+  div.not-found{
+    align-self:center;
+  }
+  &.imp::after {
+    content: '';
+    position: absolute;
+    top:-12px;
+    left:-12px;
+    background-color: crimson;
+    width:25px;
+    height: 25px;
+    transform: rotate(45deg);
+  }
+}

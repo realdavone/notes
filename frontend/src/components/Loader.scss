@@ -1,0 +1,12 @@
+.loader{
+  margin:15px auto;
+  width:2rem;
+  height:2rem;
+  border:0.3rem solid var(--text-color);
+  border-right:0.3rem solid transparent;
+  border-radius:50%;
+  animation-duration:1s;
+  animation-name:spin;
+  animation-iteration-count:infinite;
+  animation-timing-function:linear;
+}

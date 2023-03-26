@@ -5,7 +5,7 @@ import Timestamp from './Timestamp'
 
 export const SingleNote = ({ note }: { note: Note }) => {
   return (
-    <Link to={`/note/${note._id}`} className={note.isImportant ? 'imp' : ''}>
+    <Link to={`/note/${note._id}`} className={note.isImportant ? 'imp' : ''} tabIndex={0}>
       <div className="top-row">
         <CategoryLabel category={note?.category}/>
         <Timestamp timestamp={note.timestamp}/>

@@ -1,0 +1,33 @@
+fieldset.filter{
+  width:100%;
+  align-self:center;
+  padding:0.5rem;
+  position:relative;
+  display:flex;
+  align-items:stretch;
+  justify-content:center;
+  gap:1rem;
+  margin-bottom: 3px;
+  transition:0.2s ease all;
+  border:none;
+
+  select{
+    padding:0.5rem;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+
+  div.filter-item{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:1rem;
+    font-size:0.75rem;
+    background-color:var(--input-background);
+    padding:0.5rem;
+    border-radius: 6px;
+    &>*{
+      cursor:pointer;
+    }
+  }
+}

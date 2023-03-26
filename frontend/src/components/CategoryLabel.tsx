@@ -1,4 +1,5 @@
 import { Note, categories } from "../pages/Home"
+import './CategoryLabel.scss'
 
 interface CategoryLabelProps {
   category: Note['category']

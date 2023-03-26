@@ -1,0 +1,124 @@
+header.main-header{
+  display: flex;
+  flex-direction: column;
+  max-width: 285px;
+  width: 100%;
+  min-height: 55px;
+
+  div.user-info{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+  
+    span:first-of-type{
+      font-size: 1rem;
+    }
+  
+    span.email{
+      font-size: 0.75rem;
+    }
+  }
+
+  div.row{
+    padding: 15px 10px;
+    border-bottom: 1px solid #ffffff10;
+
+    &:last-of-type{
+      border:none;
+    }
+  }
+
+  p.banner{
+    font-size: 0.75rem;
+    margin-top: 15px;
+    opacity: 0.5;
+  }
+
+  div.buttons {
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+
+    a, button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      padding: 10px;
+      outline: 2px solid var(--note-background);
+      border-radius: 4px;
+      transition: 0.2s all;
+
+      span:first-of-type{
+        color: var(--theme-color);
+      }
+
+      &:hover{
+        background-color: var(--note-background);
+      }
+
+      &.active{
+        background-color: var(--theme-color);
+        outline: 2px solid var(--theme-color);
+        color: white;
+
+        span:first-of-type{
+          color: white;
+        }
+      }
+    }
+  }
+
+  button.login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px;
+    background-color: var(--theme-color);
+    font-weight: 700;
+    border-radius: 4px;
+    height: 36px;
+    color: white;
+
+    &:disabled{
+      opacity:0.5
+    }
+  }
+
+  a.logo-holder{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+}
+
+@media screen and (max-width:600px){
+  header.main-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: unset;
+    align-items: center;
+
+    button.login{
+      max-width: 69px;
+      min-width: 69px;
+      overflow: hidden;
+    }
+    div.user-info{
+      display: none!important;
+    }
+    p.banner{
+      display: none;
+    }
+    div.row{
+      padding: 0!important;
+      border: unset!important;
+    }
+  }
+}

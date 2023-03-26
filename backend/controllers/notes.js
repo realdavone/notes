@@ -1,5 +1,5 @@
 import getPagination from '../middleware/pagination.js'
-import { createNoteInDB, editNoteInDB, getNoteFromDB, getNotesFromDB, removeNoteFromDB } from '../features/note.js'
+import { createNoteInDB, editNoteInDB, getNoteFromDB, getNotesFromDB, removeNoteFromDB } from '../services/note.js'
 
 export const getNotes = async (req, res) => {
   const { page } = req.body

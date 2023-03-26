@@ -1,5 +1,5 @@
-import { arePasswordsMatching, getHashedPassword, getToken } from '../features/auth.js'
-import { createUser, getUser } from '../features/user.js'
+import { arePasswordsMatching, getHashedPassword, getToken } from '../services/auth.js'
+import { createUser, getUser } from '../services/user.js'
 
 export const login =  async (req, res) => {
   const { email, password } = req.body

@@ -4,6 +4,7 @@ import { ThemeContext } from "../context/theme"
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Logo from '../assets/logo.svg'
 import AuthLoader from "./AuthLoader"
+import './Header.scss'
 
 export default function Nav() {
   const { user, logout } = useContext(AuthContext)

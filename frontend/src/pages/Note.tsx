@@ -9,6 +9,7 @@ import { useFetch } from "../hooks/useFetch"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import { categories, Note as NoteType } from "./Home"
 import Timestamp from "../components/Timestamp"
+import './Note.scss'
 
 const NoteWrapper = ({ note, onDelete }: {
   note: NoteType

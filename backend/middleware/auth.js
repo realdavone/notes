@@ -1,4 +1,4 @@
-import { verifyToken } from '../features/auth.js'
+import { verifyToken } from '../services/auth.js'
 
 export const auth = (req, res, next) => {
   if(!req?.cookies['access-token'])
